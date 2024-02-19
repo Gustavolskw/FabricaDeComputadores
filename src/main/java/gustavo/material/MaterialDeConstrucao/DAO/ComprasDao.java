@@ -1,6 +1,7 @@
 package gustavo.material.MaterialDeConstrucao.DAO;
 
 import gustavo.material.MaterialDeConstrucao.model.Compras;
+import gustavo.material.MaterialDeConstrucao.model.Produto;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -14,9 +15,10 @@ public class ComprasDao {
         em.persist(pedido);
     }
     public List<Compras> listaDePedidos(){
-        String jpql = "SELECT p FROM Pedidos p ";
+        String jpql = "SELECT c FROM Compras c ";
         return em.createQuery(jpql, Compras.class).getResultList();
     }
+
 
 
 

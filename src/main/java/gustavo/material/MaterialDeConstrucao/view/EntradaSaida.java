@@ -28,8 +28,13 @@ public class EntradaSaida {
     }
 
     public static int solicitaEscolhaDeLista(){
-        String [] option = {"Estoque geral", "Notas Fiscais","Busca por Parametro de nome"+ "Total Vendido"};
+        String [] option = {"Estoque geral", "Notas Fiscais","Busca produto por nome", "Total Vendido"};
         return JOptionPane.showOptionDialog(null,"Escolha a Lista de Controle ", "Fabrica LEDD", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null , option, option[0] );
+
+    }
+    public static int solicitaTipoDepesquisaDeCompra(){
+        String [] option = {"Por Id","Por nome"};
+        return JOptionPane.showOptionDialog(null,"pesquisa de produto para compra ", "Fabrica LEDD", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null , option, option[0] );
 
     }
 
@@ -54,12 +59,22 @@ public class EntradaSaida {
     public static int solicitaQtdMaterial(){
         return Integer.parseInt(JOptionPane.showInputDialog(null,"Quantidade a ser fabricada"));
     }
-    public static Long darEntradaNoEstoque(String lista){
-
-        return Long.parseLong(JOptionPane.showInputDialog(null, lista,"Computadores em estoque",JOptionPane.PLAIN_MESSAGE));
-    }
     public static void listaDeEstoque(String lista){
         JOptionPane.showMessageDialog(null,lista, "Lista em Estoque",JOptionPane.PLAIN_MESSAGE);
+    }
+    public static void listaDeNotas(String lista){
+        JOptionPane.showMessageDialog(null,lista, "Notas Fiscais",JOptionPane.PLAIN_MESSAGE);
+    }
+    public static String retonaNomeProduto(){
+        return JOptionPane.showInputDialog(null, "Escreva o nome do produto que deseja pesquisar");
+    }
+
+    public static void  mostraValortTotal(Double soma){
+        JOptionPane.showMessageDialog(null, "Valor total das compras é de :"+soma);
+    }
+
+    public static Long idPesquisa(){
+        return Long.parseLong(JOptionPane.showInputDialog(null, "escreva o id do produto que deseja comprar"));
     }
 
 

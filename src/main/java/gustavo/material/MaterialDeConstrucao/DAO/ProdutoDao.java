@@ -1,5 +1,6 @@
 package gustavo.material.MaterialDeConstrucao.DAO;
 
+import gustavo.material.MaterialDeConstrucao.model.Compras;
 import gustavo.material.MaterialDeConstrucao.model.Produto;
 
 import javax.persistence.EntityManager;
@@ -29,6 +30,12 @@ public class ProdutoDao {
         String jpql = "SELECT p FROM Produto p WHERE p.id = :id";
         return em.createQuery(jpql, Produto.class).setParameter("id", id).getResultList();
     }
+
+    public List<Produto>listaPorNome(String nome){
+        String jpql = "SELECT p FROM Produto p WHERE p.nome LIKE :nome";
+        return em.createQuery(jpql, Produto.class).setParameter("nome", "%"+nome+"%").getResultList();
+    }
+
 
 
 

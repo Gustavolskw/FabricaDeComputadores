@@ -5,7 +5,9 @@ import gustavo.material.MaterialDeConstrucao.DAO.ProdutoDao;
 import gustavo.material.MaterialDeConstrucao.DAO.UsuarioDao;
 import gustavo.material.MaterialDeConstrucao.Util.JPAUtil;
 import javax.persistence.EntityManager;
+import java.util.DoubleSummaryStatistics;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Fabrica {
 	EntityManager em = JPAUtil.getEntityManager();
@@ -79,5 +81,35 @@ public class Fabrica {
 		}
 		return retorno.toString();
 	}
+
+	public String estoquePorNome(String pesquisa){
+		String retorno ="";
+		List<Produto> listaDeProdutos = produtoDao.listaPorNome(pesquisa);
+		for (Produto produto : listaDeProdutos){
+			retorno += "Codigo: "+produto.getId()+" | Nome do Produto: "+produto.getNome()+" | Preço: "+produto.getPreco()+" | QtdMaterial: "+produto.getQtdMaterial()+" | Data de Entrada: "+produto.getDataEntrada()+"\n";
+		}
+		return retorno;
+	}
+
+	public Double totalComprado(){
+		List<Compras>todasCompras = comprasDao.listaDePedidos();
+		DoubleSummaryStatistics estatisticas = todasCompras.stream().collect(Collectors.summarizingDouble(Compras::getValorTotal));
+		return estatisticas.getSum();
+	}
+
+	public String buscaProdutoPorId(Long id){
+		String retorno ="";
+		Produto produto = produtoDao.buscarPorId(id);
+
+			retorno += "Codigo: "+produto.getId()+" | Nome do Produto: "+produto.getNome()+" | Preço: "+produto.getPreco()+" | QtdMaterial: "+produto.getQtdMaterial()+" | Data de Entrada: "+produto.getDataEntrada()+"\n";
+
+		return retorno;
+	}
+
+
+	public Produto buscaPordutoEntPorId(Long id){
+        return produtoDao.buscarPorId(id);
+	}
+
 
 }

@@ -18,20 +18,21 @@ public class Controller {
         int opcoesRealtorios;
 
         do {
+            //entrada no Softwere
             entradaSoftware=EntradaSaida.solicitaOpcaoDeEntradaNoSoftware();
             switch (entradaSoftware){
                 case 0:
-                    loginUsuario();
-                    //opcoes de produçao e relatorios
-                    do {
-                        //executar Login
 
-                        EntradaSaida.msgGeral("Seja bem vindo(a) a fabrica da Ledd Computadores", JOptionPane.INFORMATION_MESSAGE);
+                    //executar Login
+                    loginUsuario();
+                    EntradaSaida.msgGeral("Seja bem vindo(a) a fabrica da Ledd Computadores", JOptionPane.INFORMATION_MESSAGE);
+                    do {
+                        // ****** Produzir *******
                         opcoesProducao = EntradaSaida.solicitaEscolha();
                         switch(opcoesProducao){
                             case 0 :
 
-                                //cadastro de produto do db
+                                // ******* Cadastro de Cliente *******
                                 String nome = EntradaSaida.solicitaDescricao();
                                 Double preco = EntradaSaida.solicitaPreco();
                                 Integer qtdFabricar = EntradaSaida.solicitaQtdMaterial();
@@ -42,22 +43,30 @@ public class Controller {
                                 break;
 
                             case 1:
-                                //relatorios
+                                //******* relatorios *******
                                 opcoesRealtorios = EntradaSaida.solicitaEscolhaDeLista();
                                 switch(opcoesRealtorios){
                                     case 0:
+                                        // ******* Estoque Total *******
                                         EntradaSaida.listaDeEstoque(this.fabrica.estoqueGeral());
                                         break;
                                     case 1:
+                                        //******* todas as notas de compra *******
+                                        EntradaSaida.listaDeNotas(this.fabrica.notasFiscais());
                                         break;
                                     case 2:
+                                        //******* pesquisa por nome do produto *******
+                                        String pesquisa = EntradaSaida.retonaNomeProduto();
+                                        EntradaSaida.listaDeEstoque(this.fabrica.estoquePorNome(pesquisa));
                                         break;
                                     case 3:
+                                        // ******* Total Comprado *******
+                                       EntradaSaida.mostraValortTotal(this.fabrica.totalComprado());
                                         break;
                                 }
                                 break;
                             case 2:
-                                // caastro de usuarios;
+                                // ******* caastro de usuarios *******
                                 String userCadastro = EntradaSaida.cadastrarUsuarioLogin();
                                 String passwordcadastro = EntradaSaida.cadastrarUsuarioSenha();
                                 Usuario usuarioCadastro = new Usuario(userCadastro,passwordcadastro);
@@ -67,8 +76,21 @@ public class Controller {
 
                     }while (opcoesProducao!=3);
                     break;
-                case 2:
+                case 1:
+                    EntradaSaida.msgGeral("Seja bem vindo a Loja de Fabrica da LEDD", -1);
                     //solicita produto para comprar por id ou nome;
+
+                    EntradaSaida.listaDeEstoque(this.fabrica.listaDeMateriaisEmEstoque());
+                    int tipoPesquisa;
+                    tipoPesquisa = EntradaSaida.solicitaTipoDepesquisaDeCompra();
+                    switch (tipoPesquisa){
+                        case 0:
+                            Long id =EntradaSaida.idPesquisa();
+                            this.fabrica.buscaProdutoPorId(id);
+                            Produto produtoParaComprar = this.fabrica.buscaPordutoEntPorId(id);
+
+                    }
+
                     //dados do cliente;
                     //realizar nota fiscal e devolver ao cliente a impressa da nota;
             }
@@ -80,10 +102,6 @@ public class Controller {
 
 
     }
-
-
-
-
 
     public void loginUsuario() {
         String usuario;
