@@ -1,7 +1,5 @@
 package gustavo.material.MaterialDeConstrucao.controller;
-import gustavo.material.MaterialDeConstrucao.model.Produto;
-import gustavo.material.MaterialDeConstrucao.model.Fabrica;
-import gustavo.material.MaterialDeConstrucao.model.Usuario;
+import gustavo.material.MaterialDeConstrucao.model.*;
 import gustavo.material.MaterialDeConstrucao.view.EntradaSaida;
 
 import javax.swing.*;
@@ -10,9 +8,11 @@ import javax.swing.*;
 public class Controller {
 
     Fabrica fabrica = null;
+    Loja loja = null;
 
     public void start() {
         this.fabrica = new Fabrica();
+        this.loja = new Loja();
         int entradaSoftware;
         int opcoesProducao;
         int opcoesRealtorios;
@@ -61,7 +61,7 @@ public class Controller {
                                         break;
                                     case 3:
                                         // ******* Total Comprado *******
-                                       EntradaSaida.mostraValortTotal(this.fabrica.totalComprado());
+                                        EntradaSaida.mostraValortTotal(this.loja.totalComprado());
                                         break;
                                 }
                                 break;
@@ -81,17 +81,19 @@ public class Controller {
                     //solicita produto para comprar por id ou nome;
 
                     EntradaSaida.listaDeEstoque(this.fabrica.listaDeMateriaisEmEstoque());
-                    int tipoPesquisa;
-                    tipoPesquisa = EntradaSaida.solicitaTipoDepesquisaDeCompra();
-                    switch (tipoPesquisa){
-                        case 0:
-                            Long id =EntradaSaida.idPesquisa();
-                            this.fabrica.buscaProdutoPorId(id);
-                            Produto produtoParaComprar = this.fabrica.buscaPordutoEntPorId(id);
+                    Long id =EntradaSaida.idPesquisa();
+                    this.loja.buscaProdutoPorId(id);
+                    Produto produtoComprado = this.loja.buscaPordutoEntPorId(id);
+                    String nomeDoCliente = EntradaSaida.solicitaNomeDoCliente();
+                    int qtdComprada = EntradaSaida.solicitaQtdMaterialComprar();
+                    Compras pedido = new Compras(produtoComprado, nomeDoCliente, qtdComprada);
+                    this.loja.cadastraPedido(pedido);
+                    int qtdEstoqueAtualizado = produtoComprado.getQtdMaterial() - qtdComprada;
+                    Produto prodtAtualizado = new Produto(produtoComprado.getId(), produtoComprado.getNome(), produtoComprado.getPreco(),qtdEstoqueAtualizado);
+                    this.fabrica.atualizaEstoque(prodtAtualizado);
+                    EntradaSaida.notaFiscalDeCompra(this.loja.buscaProdutoPorId(pedido.getId()));
 
-                    }
 
-                    //dados do cliente;
                     //realizar nota fiscal e devolver ao cliente a impressa da nota;
             }
 

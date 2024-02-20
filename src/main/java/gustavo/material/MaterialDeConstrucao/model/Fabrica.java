@@ -47,16 +47,7 @@ public class Fabrica {
 		}
 		return retorno;
 	}
-	//	public void adicionaNoEstoque(Long id, int qtdProduto){
-//		Produto produto = produtoDao.buscarPorId(id);
-//		int qtdBuscada = produto.getQtdMaterial();
-//		int totalParaEnviar = qtdBuscada + qtdProduto;
-//		Produto ProdutoParaAdicionar = new Produto(produto.getNome(),produto.getPreco(),totalParaEnviar);
-//		em.getTransaction().begin();
-//		produtoDao.atualizar(ProdutoParaAdicionar);
-//		em.getTransaction().commit();
-//		em.clear();
-//	}
+
 	public String estoqueGeral(){
 		String retorno ="";
 		List<Produto> listaDeProdutos = produtoDao.buscarTodos();
@@ -91,25 +82,10 @@ public class Fabrica {
 		return retorno;
 	}
 
-	public Double totalComprado(){
-		List<Compras>todasCompras = comprasDao.listaDePedidos();
-		DoubleSummaryStatistics estatisticas = todasCompras.stream().collect(Collectors.summarizingDouble(Compras::getValorTotal));
-		return estatisticas.getSum();
+	public void atualizaEstoque(Produto produto) {
+		em.getTransaction().begin();
+		produtoDao.atualizar(produto);
+		em.getTransaction().commit();
+		em.clear();
 	}
-
-	public String buscaProdutoPorId(Long id){
-		String retorno ="";
-		Produto produto = produtoDao.buscarPorId(id);
-
-			retorno += "Codigo: "+produto.getId()+" | Nome do Produto: "+produto.getNome()+" | Preço: "+produto.getPreco()+" | QtdMaterial: "+produto.getQtdMaterial()+" | Data de Entrada: "+produto.getDataEntrada()+"\n";
-
-		return retorno;
-	}
-
-
-	public Produto buscaPordutoEntPorId(Long id){
-        return produtoDao.buscarPorId(id);
-	}
-
-
 }

@@ -27,6 +27,12 @@ public class Produto {
         this.preco = preco;
         this.qtdMaterial = qtdMaterial;
     }
+    public Produto(Long id, String nome, Double preco, Integer qtdMaterial){
+        this.id = id;
+        this.nome = nome;
+        this.preco = preco;
+        this.qtdMaterial = qtdMaterial;
+    }
 
     public Produto(Produto mat) {
         this.id = mat.getId();

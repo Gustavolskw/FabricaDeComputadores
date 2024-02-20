@@ -35,6 +35,10 @@ public class ProdutoDao {
         String jpql = "SELECT p FROM Produto p WHERE p.nome LIKE :nome";
         return em.createQuery(jpql, Produto.class).setParameter("nome", "%"+nome+"%").getResultList();
     }
+    public Produto pesquisaPorNome(String nome){
+        String jpql = "SELECT p FROM Produto p WHERE p.nome LIKE :nome";
+        return em.createQuery(jpql, Produto.class).setParameter("nome", "%"+nome+"%").getSingleResult();
+    }
 
 
 

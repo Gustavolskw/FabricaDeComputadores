@@ -44,8 +44,8 @@ public class EntradaSaida {
     public static String senhaDeEntrada(String login){
         return JOptionPane.showInputDialog(null, "Usuario :" +login, "Login de acesso de usuario", JOptionPane.QUESTION_MESSAGE);
     }
-    public static String nomeDeCliente(){
-        return JOptionPane.showInputDialog(null, "Digite seu nome:");
+    public static int solicitaQtdMaterialComprar(){
+        return Integer.parseInt(JOptionPane.showInputDialog(null,"Quantidade a ser comprada"));
     }
     public static void msgGeral(String mensagem, int tipoDeMenagem  ){
         JOptionPane.showMessageDialog(null, mensagem, "Fabrica LEDD", tipoDeMenagem);
@@ -62,11 +62,14 @@ public class EntradaSaida {
     public static void listaDeEstoque(String lista){
         JOptionPane.showMessageDialog(null,lista, "Lista em Estoque",JOptionPane.PLAIN_MESSAGE);
     }
+    public static void notaFiscalDeCompra(String nota){
+        JOptionPane.showMessageDialog(null,nota, "Nota Fiscal da Compra",JOptionPane.PLAIN_MESSAGE);
+    }
     public static void listaDeNotas(String lista){
         JOptionPane.showMessageDialog(null,lista, "Notas Fiscais",JOptionPane.PLAIN_MESSAGE);
     }
     public static String retonaNomeProduto(){
-        return JOptionPane.showInputDialog(null, "Escreva o nome do produto que deseja pesquisar");
+        return JOptionPane.showInputDialog(null, "Escreva o nome do produto que deseja comprar");
     }
 
     public static void  mostraValortTotal(Double soma){
